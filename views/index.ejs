@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="todo list" content="Daily todo activity">
+    <meta name="view-port" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <title>Todo list</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <div class="heading">
+      <h1><%=dayOfWeek%> todo list</h1>
+    </div>
+    <div class="list">
+      <ul>
+      <%  for(let i = 0; i < newListItems.length; i++){%>
+        <input type="checkbox">
+        <p><%= newListItems[i]%> </p>
+      <%}%>
+      </ul>
+    </div>
+<form class="form" action="/" method="post">
+  <input type="text" name="newItem" placeholder="New item" autocomplete="off" autofocus>
+  <button type="submit" name="button">➕</button>
+</form>
+
+  </body>
+</html>

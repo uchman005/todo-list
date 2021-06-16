@@ -1,9 +1,50 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
-const port = 3000;
 const app = express();
-const mongoose = require('mongoose');
+
+app.set('view engine', 'ejs');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static(__dirname + '/public'));
+
+let items = ["Welcome to your to-do list", "Click the ➕ button to add new items", "Check the checkbox to remove to-dos"];
+
+let dynamicItems = ["Custom to-do list"];
+
+let day = "Today";
+
+app.get('/', (req, res) => {
+  // let today = new Date();
+  // let options = {weekday: 'long'};
+  // let day = today.toLocaleDateString("en-US", options);
+  res.render('index', { listTitle: day, newListItems: items })
+});
+
+app.post('/', (req, res) => {
+  let item = req.body.newItem;
+
+  if (req.body.list == "Today") {
+    items.push(item);
+    res.redirect('/');
+  } else {
+    dynamicItems.push(item);
+    res.redirect('/work')
+  }
+
+});
+
+app.get("/work", (req, res) => {
+  res.render('index', { listTitle: "work", newListItems: dynamicItems })
+});
+
+
+
+app.listen(3000, () => console.log(`Server is live at port 3000`));
+
+
+/*const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/listsDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -13,33 +54,32 @@ name: String
 
 const List =  mongoose.model("list", listSchema );
 
-const list = new List({
+const list1 = new List({
   name: "New to-do list"
 });
 
-// list.save();
-List.find({name:"New to-do list"});
-
-app.set('view engine', 'ejs');
-
-app.use(bodyParser.urlencoded({extended: true}));
-
-app.use(express.static(__dirname + '/public'));
-
-let items = ["Welcome to your to-do list", "Click the ➕ button to add new items", "Check the checkbox to remove to-dos"];
-
-app.get('/', (req, res) => {
-  let today = new Date();
-  let options = {weekday: 'long'};
-  let day = today.toLocaleDateString("en-US", options);
-  res.render('index', {dayOfWeek: day, newListItems: items})
+const list2 = new List({
+  name: "Click to add to-do"
 });
 
-app.post('/',(req, res)=> {
-  let item = req.body.newItem;
-  items.push(item);
-  res.redirect('/');
+const list3 = new List({
+  name: "Check to cancel to-do"
+})
+
+List.insertMany([list1,list2,list3], (err)=>{
+  if(err){
+    console.log(err);
+  }else{
+    console.log("Successfully added items to database");
+  }
+})
+List.find(function(err, lists){
+  if(err){
+    console.log(err);
+  }else{
+    mongoose.connection.close();
+    lists.forEach((list)=>console.log(list.name))
+  }
 });
+*/
 
-
-app.listen(port, ()=>console.log(`Server is live at port ${port}`));

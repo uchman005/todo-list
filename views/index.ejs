@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta name="todo list" content="Daily todo activity">
-    <meta name="view-port" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta charset="utf-8">
-    <title>Todo list</title>
-    <link rel="stylesheet" href="css/styles.css">
-  </head>
-  <body>
-    <div class="box">
-      <div id="heading">
-        <h1><%=dayOfWeek%> todo list</h1>
-      </div>
-      <div>
-        <ul>
-        <!-- <%  for(let i = 0; i < newListItems.length; i++){%>
-          <input type="checkbox">
-          <p><%= newListItems[i]%> </p>
-        <%}%> -->
-        <%newListItems.forEach(function(newListItem){%>
-          <input type="checkbox">
-          <p><%= newListItem %></p>
-       <% });%>
-        </ul>
-      </div>
-  <form class="form" action="/" method="post">
-    <input type="text" name="newItem" placeholder="New item" autocomplete="off" autofocus>
-    <button type="submit" name="button">➕</button>
-  </form>
-  
+
+<head>
+  <meta name="todo list" content="Daily todo activity">
+  <meta name="view-port" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <title>Todo list</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="box">
+    <div id="heading">
+      <h1>
+        <%=listTitle%>'s todo list
+      </h1>
     </div>
-    
-  </body>
+    <ul>
+      <%newListItems.forEach(function(newListItem){%>
+        <input type="checkbox" name="checkbox">
+        <p>
+          <%= newListItem %>
+        </p>
+        <% });%>
+    </ul>
+    <form class="form" action="/" method="post">
+      <input type="text" name="newItem" placeholder="New item" autocomplete="off" autofocus>
+      <button type="submit" name="list" value="<%=listTitle%>">➕</button>
+    </form>
+
+  </div>
+
+</body>
+
 </html>

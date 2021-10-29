@@ -1,11 +1,11 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const ejs = require('ejs');
+//const express = require('express');
+import express from "express";
+import ejs from "ejs";
+//const ejs = require('ejs');
 const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/public'));
 
@@ -16,27 +16,27 @@ let dynamicItems = ["Custom to-do list"];
 let day = "Today";
 
 app.get('/', (req, res) => {
-  // let today = new Date();
-  // let options = {weekday: 'long'};
-  // let day = today.toLocaleDateString("en-US", options);
-  res.render('index', { listTitle: day, newListItems: items })
+    // let today = new Date();
+    // let options = {weekday: 'long'};
+    // let day = today.toLocaleDateString("en-US", options);
+    res.render('index', { listTitle: day, newListItems: items });
 });
 
 app.post('/', (req, res) => {
-  let item = req.body.newItem;
+    let item = req.body.newItem;
 
-  if (req.body.list == "Today") {
-    items.push(item);
-    res.redirect('/');
-  } else {
-    dynamicItems.push(item);
-    res.redirect('/work')
-  }
+    if (req.body.list == "Today") {
+        items.push(item);
+        res.redirect('/');
+    } else {
+        dynamicItems.push(item);
+        res.redirect('/work')
+    }
 
 });
 
-app.get("/work", (req, res) => {
-  res.render('index', { listTitle: "work", newListItems: dynamicItems })
+app.get("/:work", (req, res) => {
+    res.render('index', { listTitle: req.params.work, newListItems: dynamicItems })
 });
 
 
@@ -82,4 +82,3 @@ List.find(function(err, lists){
   }
 });
 */
-
